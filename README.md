@@ -1,2 +1,2 @@
 # Project-MIO
-Project for MIO classes
+Project for MIO class
