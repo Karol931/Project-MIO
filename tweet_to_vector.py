@@ -40,13 +40,13 @@ if __name__ == "__main__":
     tweets_content = df['content']
     test_tweets = tweets_content[0:10]
     
-    test_tweets = to_lower(test_tweets)
-    test_tweets = remove_links(test_tweets)
-    test_tweets = remove_punctuation(test_tweets)
+    tweets_tweets = to_lower(tweets_content)
+    tweets_tweets = remove_links(tweets_tweets)
+    tweets_tweets = remove_punctuation(tweets_tweets)
 
-    test_vector = tweets_to_vectors(test_tweets)
+    tweets_vector = tweets_to_vectors(tweets_tweets)
 
-    for i in range(1,len(test_vector)):
-        print_tweets_and_similarity(test_tweets[i-1], test_tweets[i] ,test_vector[i-1], test_vector[i])
+    for i in range(1,len(tweets_vector)):
+        print_tweets_and_similarity(tweets_tweets[i-1], tweets_tweets[i] ,tweets_vector[i-1], tweets_vector[i])
 
     
