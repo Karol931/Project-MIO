@@ -54,16 +54,29 @@ def trim_tweets(tweets_content):
     tweets_content = remove_pictures(tweets_content)
     tweets_content = remove_punctuation(tweets_content)
     tweets_content = remove_many_whitespaces(tweets_content)
+    tweets_content = to_lower(tweets_content)
 
     return tweets_content
+
+# nie dziala
+def delete_empty_tweets(df):
+
+    tweets_content = df["content"]
+
+    for i in range(len(df)):
+        if(len(tweets_content[i]) < 2):
+            df = df.drop(index = i)
+    
+    return df
+
 
 if __name__ == "__main__":
     df = pd.read_csv("trumptweets.csv")
 
-    tweets_content = df['content']
+    df["content"] = trim_tweets(df["content"])
 
-    tweets_content = tweets_content[916:917]
-    tweets_content = trim_tweets(tweets_content)
+    df = delete_empty_tweets(df)
 
-    print(tweets_content.to_numpy())
+    print(len(df))
+    # print(df["content"].to_numpy())
         
