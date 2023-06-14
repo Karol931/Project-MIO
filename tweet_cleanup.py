@@ -19,7 +19,7 @@ def to_lower(tweets_content):
 # Removes punctuation from tweet
 def remove_punctuation(tweets_content):
     
-    tweets_content = tweets_content.replace(to_replace = "[^A-Za-z' ]", value = "", regex = True)
+    tweets_content = tweets_content.replace(to_replace = "[^A-Za-z' ]", value = " ", regex = True)
     
     return tweets_content
 
@@ -43,15 +43,15 @@ def remove_many_whitespaces(tweets_content):
 
 def remove_pictures(tweets_content):
 
-    tweets_content = tweets_content.replace(to_replace = "pic.twitter.com/\S+", value = " ", regex = True)
+    tweets_content = tweets_content.replace(to_replace = "pic\.twitter\.com/\S+", value = " ", regex = True)
 
     return tweets_content
 
 def trim_tweets(tweets_content):
+    tweets_content = remove_pictures(tweets_content)
     tweets_content = remove_links(tweets_content)
     tweets_content = remove_hashtags(tweets_content)
     tweets_content = remove_tags(tweets_content)
-    tweets_content = remove_pictures(tweets_content)
     tweets_content = remove_punctuation(tweets_content)
     tweets_content = remove_many_whitespaces(tweets_content)
     tweets_content = to_lower(tweets_content)
