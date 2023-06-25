@@ -71,6 +71,8 @@ if __name__ == "__main__":
     model = train_model('./tweet_words.txt')
     tweets_content = df["content"]
 
+    model.save_model('saved_model_trumptweets.bin')
+
     tweets_vectors = get_tweets_vector_list(tweets_content, model)
 
     print(len(tweets_vectors[0]))
