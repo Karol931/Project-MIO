@@ -8,8 +8,8 @@ from tweet_cleanup import delete_empty_tweets, trim_tweets
 
 def normalize_quantile(data):
 
-    data = data.rank(pct=True)
-
+    data = data.rank(pct=True)*100
+    
     return data
 
 def normalize_log(data):
@@ -18,6 +18,12 @@ def normalize_log(data):
     data = data/ max(data)
 
     return data
+
+def get_tweet_score(favourite, retweets, scale = 0.5):
+
+    score = favourite * scale + retweets * scale
+
+    return score
 
 if __name__ == "__main__":
 
@@ -33,6 +39,14 @@ if __name__ == "__main__":
 
     quant_retweets = normalize_quantile(retweets)
 
+    log_favourites = normalize_log(favourites)
+
+    quant_favourites = normalize_quantile(favourites)
+
+    quant_score = get_tweet_score(quant_favourites, quant_retweets)
+
+    
+
     # plt.hist(log_retweets)
     # plt.figure()
     # plt.hist(quant_retweets)
@@ -41,5 +55,5 @@ if __name__ == "__main__":
     # plt.show()
 
 
-    # for i in range(100):
-    #     print(str(log_retweets[i]) + " " + str(quant_retweets[i]) + " " + str(retweets[i]))
+    for i in range(100):
+        print(str(quant_favourites[i]) + " " + str(quant_retweets[i]) + " " + str(quant_score[i]))
