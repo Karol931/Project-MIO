@@ -8,8 +8,8 @@ from tweet_cleanup import delete_empty_tweets, trim_tweets
 
 def normalize_quantile(data):
 
-    data = data.rank(pct=True)
-
+    data = data.rank(pct=True)*100
+    
     return data
 
 def normalize_log(data):
