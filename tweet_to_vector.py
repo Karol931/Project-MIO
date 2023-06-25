@@ -1,39 +1,9 @@
-import string
 import pandas as pd
 import numpy as np
-import spacy
 import fasttext
 from sklearn.metrics.pairwise import cosine_similarity
 from tweet_cleanup import trim_tweets, delete_empty_tweets
 
-# nlp = spacy.load('en_core_web_md')
-
-# def cosine(v1, v2):
-#     if np.linalg.norm(v1) > 0 and np.linalg.norm(v2) > 0:
-#         return np.dot(v1, v2) / (np.linalg.norm(v1) * np.linalg.norm(v2))
-#     else:
-#         return 0.0
-
-# def sentvec(s):
-#     sent = nlp(s)
-
-#     return np.mean([w.vector for w in sent], axis=0)
-
-# # Changing tweets content to vectors
-# def tweets_to_vectors(tweets_content):
-#     tweets_vector = []
-    
-#     for tweet_content in tweets_content:
-#         tweets_vector.append(sentvec(tweet_content))
-    
-#     return tweets_vector
-
-# # Printing tweets content and similarities
-# def print_tweets_and_similarity(t_content_one, t_content_two, t_vector_one, t_vector_two):
-    
-#     print(t_content_one)
-#     print(t_content_two)
-#     print(str(cosine(t_vector_one, t_vector_two)) + "\n")
 
 # Makes file with tweets as rows
 def prepare_training_data(df):
