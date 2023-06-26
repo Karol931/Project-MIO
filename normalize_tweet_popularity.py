@@ -25,6 +25,11 @@ def get_tweet_score(favourite, retweets, scale = 0.5):
 
     return score
 
+def denormalize_quantile(data, value):
+
+    return data.quantile(value/100)
+
+
 if __name__ == "__main__":
 
     df = pd.read_csv("trumptweets.csv")
@@ -56,4 +61,4 @@ if __name__ == "__main__":
 
 
     for i in range(100):
-        print(str(quant_favourites[i]) + " " + str(quant_retweets[i]) + " " + str(quant_score[i]))
+        print(str(quant_retweets[i]) + " " + str(denormalize_quantile(retweets, quant_retweets[i])) + " " + str(retweets[i]))
