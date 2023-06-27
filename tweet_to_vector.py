@@ -1,5 +1,6 @@
 import string
 import pandas as pd
+import os
 import numpy as np
 import spacy
 import fasttext
@@ -48,11 +49,8 @@ def train_model(path):
 # Converts tweet into vector of length 100
 def get_tweets_vector_list(tweets_content, model):
 
-    tweets_vectors = []
+    tweets_vectors = [model.get_sentence_vector(tweet) for tweet in tweets_content]
 
-    for tweet in tweets_content:
-        vector = model.get_sentence_vector(tweet)
-        tweets_vectors.append(vector)
 
     return tweets_vectors
 
