@@ -10,24 +10,22 @@ from tweet_cleanup import trim_tweets, delete_empty_tweets
 def prepare_training_data(df):
     df.to_csv("tweet_words.txt", columns=["content"], header=None, index=False)
 
+
 # Trains model from file with tweets as rows
 def train_model(path):
     model = fasttext.train_unsupervised(path, model='skipgram', lr=0.1, lrUpdateRate=100, dim=100, loss='hs')
 
     return model
 
+
 # Converts tweet into vector of length 100
 def get_tweets_vector_list(tweets_content, model):
-
-    tweets_vectors = [model.get_sentence_vector(tweet) for tweet in tweets_content]
-
+    tweets_vectors = np.array([model.get_sentence_vector(tweet) for tweet in tweets_content])
 
     return tweets_vectors
 
 
-
 if __name__ == "__main__":
-
     df = pd.read_csv("trumptweets.csv")
 
     df["content"] = trim_tweets(df["content"])
@@ -45,6 +43,8 @@ if __name__ == "__main__":
 
     print(len(tweets_vectors[0]))
 
+    print(model.get_nearest_neighbors('biden'))
+
     # for i in range(10):
     #     tweet1 = tweets_content[i]
     #     tweet2 = tweets_content[i+1]
@@ -59,5 +59,3 @@ if __name__ == "__main__":
     #     print()
 
     # print(df["content"])
-
-    
