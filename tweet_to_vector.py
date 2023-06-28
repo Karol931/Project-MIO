@@ -35,9 +35,10 @@ if __name__ == "__main__":
     prepare_training_data(df)
 
     model = train_model('./tweet_words.txt')
+    # model = fasttext.load_model('saved_model_trumptweets_v2.bin')
     tweets_content = df["content"]
 
-    model.save_model('saved_model_trumptweets.bin')
+    # model.save_model('saved_model_trumptweets_dim200.bin')
 
     tweets_vectors = get_tweets_vector_list(tweets_content, model)
 

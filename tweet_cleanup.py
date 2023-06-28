@@ -76,6 +76,13 @@ def remove_pictures(tweets_content):
 
     return tweets_content
 
+def remove_apostrof(tweets_content):
+
+    tweets_content = tweets_content.replace(to_replace = "'", value = "", regex = True)
+
+
+    return tweets_content
+
 
 def trim_tweets(tweets_content):
     tweets_content = remove_pictures(tweets_content)
