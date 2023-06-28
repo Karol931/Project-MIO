@@ -27,6 +27,11 @@ def get_tweet_score(favourite, retweets, scale = 0.5):
 
 def denormalize_quantile(data, value):
 
+    if(value > 100): 
+        value = 100
+    elif(value < 0):
+        value = 0
+    # print(data.quantile(value/100))
     return data.quantile(value/100)
 
 
