@@ -18,11 +18,13 @@ def divide_data(bins=3, log = True):
     df = delete_empty_tweets(df)
 
 
-    df.drop(df[df['retweets'] < np.exp(2)].index, inplace=True)
-    df.drop(df[df['retweets'] > np.exp(10.5)].index, inplace=True)
+    lower_quartile = np.exp(2)
+    upper_quartile = np.exp(10.5)
 
-    # lower_quartile = df['retweets'].quantile(0.5)
-    # upper_quartile = df['retweets'].quantile(0.75)
+    df.drop(df[df['retweets'] < lower_quartile].index, inplace=True)
+
+    df.drop(df[df['retweets'] > upper_quartile].index, inplace=True)
+
 
     df['retweets_log'] = np.log(df['retweets'] + 1)
 
@@ -39,16 +41,18 @@ def divide_data(bins=3, log = True):
         lspc[-1] = float('inf')
         print(lspc)
 
-
     df['class'] = pd.cut(df['retweets'], bins=lspc,
                          labels=[str(i + 1) for i in range(bins)], right=False)
 
     df['content'] = "__label__" + df['class'].astype(str) + " " + df['content'].astype(str)
 
-
     plt.figure()
-    plt.hist([df['retweets_log'][df['class'] == str(i+1)] for i in range(bins)], 100)
+    plt.xlabel("log(retweets)")
+    plt.ylabel("frequency")
 
+    plt.hist([df['retweets_log'][df['class'] == str(i+1)] for i in range(bins)], 200)
+    filename = "hist_" + str(bins) + ".png"
+    plt.savefig(filename)
 
     data_train, data_test = train_test_split(df[['content', 'retweets', 'class']], test_size=0.2)
 
@@ -72,12 +76,13 @@ def make_model(bins,log = True):
     ms = model.test_label("./tweet_data/data_test.test")
     for k, v in ms.items():
         print(k, v)
-
+    return model
 
 if __name__ == "__main__":
-    for i in range(3, 6):
+    for i in [3, 5]:
         print("----------------------------------------")
         print("nr of bins: ", i)
-        make_model(i, False)
-
+        model_name = "model_fasttext_" + str(i) + ".bin"
+        f_model = make_model(i, False)
+        f_model.save_model(model_name)
     plt.show()
